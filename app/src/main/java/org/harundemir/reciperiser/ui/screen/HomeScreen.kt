@@ -1,23 +1,37 @@
 package org.harundemir.reciperiser.ui.screen
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.*
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import org.harundemir.reciperiser.data.model.Meal
 import org.harundemir.reciperiser.ui.state.MealUIState
 import org.harundemir.reciperiser.ui.viewmodel.MealViewModel
 
 @Composable
-fun HomeScreen(viewModel: MealViewModel) {
+fun HomeScreen(viewModel: MealViewModel, navController: NavController) {
     val uiState by viewModel.uiState.collectAsState()
     var searchQuery by remember { mutableStateOf("chicken") }
 
@@ -59,7 +73,7 @@ fun HomeScreen(viewModel: MealViewModel) {
                             Text("No meals found")
                         }
                     } else {
-                        MealList(meals = meals)
+                        MealList(meals = meals, navController = navController)
                     }
                 }
 
@@ -80,23 +94,26 @@ fun HomeScreen(viewModel: MealViewModel) {
 }
 
 @Composable
-fun MealList(meals: List<Meal>) {
+fun MealList(meals: List<Meal>, navController: NavController) {
     LazyColumn(
         modifier = Modifier.padding(16.dp)
     ) {
         items(meals) { meal ->
-            MealItem(meal = meal)
+            MealItem(meal = meal, onClick = {
+                navController.navigate("mealDetail/${meal.id}")
+            })
         }
     }
 }
 
 @Composable
-fun MealItem(meal: Meal) {
+fun MealItem(meal: Meal, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp),
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(4.dp),
+        onClick = onClick
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = meal.name, style = MaterialTheme.typography.titleMedium)
