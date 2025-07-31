@@ -29,7 +29,11 @@ class MainActivity : ComponentActivity() {
                     }
                     composable("mealDetail/{mealId}") { backStackEntry ->
                         val mealId = backStackEntry.arguments?.getString("mealId") ?: ""
-                        MealDetailScreen(viewModel = viewModel, mealId = mealId)
+                        MealDetailScreen(
+                            viewModel = viewModel,
+                            mealId = mealId,
+                            navController = navController
+                        )
                     }
                 }
             }
