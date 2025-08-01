@@ -134,7 +134,7 @@ fun MealItem(meal: Meal, onClick: () -> Unit) {
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            meal.thumbnailUrl?.let { url ->
+            meal.thumbnail?.let { url ->
                 AsyncImage(
                     model = url,
                     contentDescription = "${meal.name} thumbnail",

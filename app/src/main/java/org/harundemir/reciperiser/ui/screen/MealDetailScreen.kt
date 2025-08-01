@@ -94,7 +94,7 @@ fun MealDetailScreen(viewModel: MealViewModel, mealId: String, navController: Na
 @Composable
 fun MealDetailContent(meal: Meal) {
     Column(modifier = Modifier.fillMaxWidth()) {
-        meal.thumbnailUrl?.let { url ->
+        meal.thumbnail?.let { url ->
             AsyncImage(
                 model = url,
                 contentDescription = "${meal.name} thumbnail",

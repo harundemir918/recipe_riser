@@ -21,5 +21,5 @@ data class Meal(
     val instructions: String? = null,
 
     @SerializedName("strMealThumb")
-    val thumbnailUrl: String? = null,
+    val thumbnail: String? = null,
 )
